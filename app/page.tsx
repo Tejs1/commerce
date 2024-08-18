@@ -1,5 +1,5 @@
 import Image from "next/image"
-import ProductCard from "./_components/ProductCard"
+import ProductCard from "../components/layout/ProductCard"
 
 export default async function Home() {
 	const products = await fetch(
