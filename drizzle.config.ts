@@ -1,13 +1,13 @@
-import { type Config } from "drizzle-kit";
+import { type Config } from 'drizzle-kit';
 
-import { env } from "@/env";
+import { env } from '@/env';
 
 export default {
-  schema: "./server/db/schema.ts",
-  out: "./server/db/generated",
-  dialect: "postgresql",
+  schema: './server/db/schema.ts',
+  out: './server/db/generated',
+  dialect: 'postgresql',
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: env.DATABASE_URL
   },
-  tablesFilter: ["nuecomm_*"],
+  tablesFilter: ['nuecomm_*']
 } satisfies Config;
