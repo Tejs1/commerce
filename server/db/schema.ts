@@ -8,7 +8,8 @@ import {
 	serial,
 	timestamp,
 	varchar,
-	pgTable,  text, integer, decimal,  boolean
+	pgTable,  text, integer, decimal,  boolean,
+	 doublePrecision
 } from "drizzle-orm/pg-core"
 
 
@@ -27,15 +28,15 @@ export const products = createTable('products', {
   handle: text('handle').notNull().unique(),
   title: text('title').notNull(),
   description: text('description'),
-  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
+  price: doublePrecision('price').notNull(),
   availableForSale: boolean('available_for_sale').notNull().default(true),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
 export const productImages = createTable('product_images', {
   id: serial('id').primaryKey(),
-  productId: integer('product_id').references(() => products.id),
+  productId: integer('product_id').references(() => products.id).notNull(),
   url: text('url').notNull(),
   altText: text('alt_text'),
 });
@@ -48,18 +49,20 @@ export const collections = createTable('collections', {
 });
 
 export const productCollections = createTable('product_collections', {
-  productId: integer('product_id').references(() => products.id),
-  collectionId: integer('collection_id').references(() => collections.id),
+  id: serial('id').primaryKey(),
+  productId: integer('product_id').references(() => products.id).notNull(),
+  collectionId: integer('collection_id').references(() => collections.id).notNull(),
 });
 
 export const carts = createTable('carts', {
   id: serial('id').primaryKey(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
 export const cartItems = createTable('cart_items', {
   id: serial('id').primaryKey(),
-  cartId: integer('cart_id').references(() => carts.id),
-  productId: integer('product_id').references(() => products.id),
+  cartId: integer('cart_id').references(() => carts.id).notNull(),
+  productId: integer('product_id').references(() => products.id).notNull(),
   quantity: integer('quantity').notNull(),
 });
