@@ -37,7 +37,9 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    ".prettierc"
+    ".prettierc",
+    "postcss.config.mjs",
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
